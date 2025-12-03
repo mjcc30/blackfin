@@ -6,6 +6,13 @@ thc-help:
     @echo "  just clean-traces       - Clear history, logs, and temp files"
     @echo "  just ssh-stealth <host> - SSH without writing to known_hosts or history"
     @echo "  just gen-revshell <ip> <port> - Generate common reverse shell payloads"
+    @echo "  just ghost-shell        - Launch a new shell with a spoofed IP (Ghost IP)"
+
+# Lancer un Ghost Shell (IP Spoofée)
+ghost-shell:
+    @echo "👻 Launching Ghost Shell (Root required)..."
+    @sudo /usr/bin/ghost-shell
+    @echo "To exit ghost mode, type 'exit'"
 
 # Nettoyage des traces basique (Stealth)
 clean-traces:
