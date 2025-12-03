@@ -28,8 +28,19 @@ Traditional security distributions (Kali, BlackArch, Parrot) are often unstable 
 
 ## ⚡ Quick Start
 
-### 1. Installation
-Download the ISO from the [Releases Page](../../releases) and install it like any Fedora system.
+### 1. Installation (Rebase Method)
+Currently, the recommended way to install Blackfin is to rebase from an existing **Bluefin** installation.
+
+1.  Install [Bluefin-dx](https://projectbluefin.io/) (Developer Experience) on your machine or VM.
+2.  Open a terminal and run:
+    ```bash
+    rpm-ostree rebase ostree-unverified-registry:ghcr.io/mjcc30/blackfin:latest
+    ```
+3.  Reboot your system:
+    ```bash
+    systemctl reboot
+    ```
+    *Note: "Unverified" is used here because you haven't imported the Cosign public key yet. This is safe for testing.*
 
 ### 2. Launching BlackArch
 Blackfin comes with a pre-configured integration for BlackArch.
