@@ -1,0 +1,35 @@
+name: Generate ISO
+
+on:
+  workflow_dispatch: # Déclenchement manuel via l'interface GitHub
+
+jobs:
+  iso:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+
+    steps:
+      - name: Generate ISO
+        uses: jasonn3/build-container-installer@v1.2.4
+        with:
+          image_name: blackfin
+          image_repo: ghcr.io/mjcc30
+          # On pointe sur la version "latest" qui vient d'être construite
+          image_tag: latest 
+          variant: Silverblue
+          version: 41 # Version de Fedora (doit matcher celle de Bluefin)
+          iso_name: blackfin-latest.iso
+          enrollment_password: "blackfin-user" # Mot de passe par défaut optionnel pour le secure boot
+
+      - name: Upload ISO to Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: blackfin-iso
+          path: |
+            *.iso
+            *.iso-CHECKSUM
+          if-no-files-found: error
+          retention-days: 5
