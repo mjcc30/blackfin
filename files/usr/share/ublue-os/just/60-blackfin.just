@@ -4,10 +4,15 @@
 # Affiche l'aide de Blackfin
 blackfin-help:
     @echo "🦈 Blackfin Custom Commands:"
+    @echo "  just cheat              - Show the Blackfin Cheatsheet (Commands & Tips)"
     @echo "  just blackfin-update    - Update System, Exegol and BlackArch"
     @echo "  just stealth-mode-on    - Randomize MAC, disable Logs & Bluetooth"
     @echo "  just stealth-mode-off   - Restore normal networking"
     @echo "  just install-seclists   - Download SecLists to ~/Wordlists"
+
+# Afficher la Cheatsheet
+cheat:
+    @bat /usr/share/doc/blackfin/CHEATSHEET.md || cat /usr/share/doc/blackfin/CHEATSHEET.md
 
 # Mise à jour complète (Système + Outils)
 blackfin-update:
