@@ -1,6 +1,10 @@
 # Blackfin 🏴‍☠️
 ### The Immutable Cybersecurity Workstation
 
+<p align="center">
+  <img src="logo.png" alt="Blackfin Logo" width="300"/>
+</p>
+
 ![Blackfin Badge](https://img.shields.io/badge/Based_on-Bluefin-blue) ![Status](https://img.shields.io/github/actions/workflow/status/mjcc30/blackfin/build.yml)
 
 **Blackfin** is a next-generation penetration testing distribution built on the principles of **Cloud Native Linux**. 
