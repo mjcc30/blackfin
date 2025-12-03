@@ -1,0 +1,22 @@
+name: Cleanup Old Images
+on:
+  schedule:
+    - cron: '30 0 * * *'  # Runs every day at 00:30 UTC
+  workflow_dispatch:      # Allow manual run
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - name: Delete old images
+        uses: actions/delete-package-versions@v5
+        with:
+          package-name: 'blackfin'
+          package-type: 'container'
+          min-versions-to-keep: 3
+          delete-only-untagged-versions: 'true'
+          # Note: This action primarily targets untagged images (intermediate builds).
+          # For a more aggressive cleanup of tagged images, other actions might be needed,
+          # but this is safe to start with.
