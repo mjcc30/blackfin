@@ -1,43 +1,62 @@
-# BlueBuild Template &nbsp; [![bluebuild build badge](https://github.com/blue-build/template/actions/workflows/build.yml/badge.svg)](https://github.com/blue-build/template/actions/workflows/build.yml)
+# Blackfin 🏴‍☠️
+### The Immutable Cybersecurity Workstation
 
-See the [BlueBuild docs](https://blue-build.org/how-to/setup/) for quick setup instructions for setting up your own repository based on this template.
+![Blackfin Badge](https://img.shields.io/badge/Based_on-Bluefin-blue) ![Status](https://img.shields.io/github/actions/workflow/status/mjcc30/blackfin/build.yml)
 
-After setup, it is recommended you update this README to describe your custom image.
+**Blackfin** is a next-generation penetration testing distribution built on the principles of **Cloud Native Linux**. 
 
-## Installation
+Based on [Bluefin](https://projectbluefin.io/), it provides an atomic, indestructible host system where security tools live in isolated, disposable containers.
 
-> [!WARNING]  
-> [This is an experimental feature](https://www.fedoraproject.org/wiki/Changes/OstreeNativeContainerStable), try at your own discretion.
+> **Philosophy:** "The Host is Sacred, The Tools are Disposable."
 
-To rebase an existing atomic Fedora installation to the latest build:
+## 🚀 Why Blackfin?
 
-- First rebase to the unsigned image, to get the proper signing keys and policies installed:
-  ```
-  rpm-ostree rebase ostree-unverified-registry:ghcr.io/blue-build/template:latest
-  ```
-- Reboot to complete the rebase:
-  ```
-  systemctl reboot
-  ```
-- Then rebase to the signed image, like so:
-  ```
-  rpm-ostree rebase ostree-image-signed:docker://ghcr.io/blue-build/template:latest
-  ```
-- Reboot again to complete the installation
-  ```
-  systemctl reboot
-  ```
+Traditional security distributions (Kali, BlackArch, Parrot) are often unstable because they mix thousands of bleeding-edge tools with system packages. One `apt upgrade` can break your desktop environment.
 
-The `latest` tag will automatically point to the latest build. That build will still always use the Fedora version specified in `recipe.yml`, so you won't get accidentally updated to the next major version.
+**Blackfin solves this.**
 
-## ISO
+- **🛡️ Indestructible Host:** The base system is an immutable Fedora Silverblue image. It never breaks.
+- **📦 Containerized Arsenal:**
+    - **[Exegol](https://exegol.com):** Native support (Podman socket enabled by default).
+    - **[BlackArch](https://blackarch.org):** Integrated via Distrobox. Access 3000+ tools seamlessly.
+- **💻 Developer Experience:** Includes VS Code, Docker, Podman, and Zsh out of the box.
+- **🎮 Hardware Ready:** Nvidia drivers and surface kernel included (thanks to Bluefin).
 
-If build on Fedora Atomic, you can generate an offline ISO with the instructions available [here](https://blue-build.org/learn/universal-blue/#fresh-install-from-an-iso). These ISOs cannot unfortunately be distributed on GitHub for free due to large sizes, so for public projects something else has to be used for hosting.
+## ⚡ Quick Start
 
-## Verification
+### 1. Installation
+Download the ISO from the [Releases Page](../../releases) and install it like any Fedora system.
 
-These images are signed with [Sigstore](https://www.sigstore.dev/)'s [cosign](https://github.com/sigstore/cosign). You can verify the signature by downloading the `cosign.pub` file from this repo and running the following command:
-
+### 2. Launching BlackArch
+Blackfin comes with a pre-configured integration for BlackArch.
 ```bash
-cosign verify --key cosign.pub ghcr.io/blue-build/template
+# Initialize the BlackArch container (one time setup)
+distrobox assemble create
+
+# Enter the container
+start-blackarch
+
+# Run tools directly from your host
+msfconsole
 ```
+
+### 3. Using Exegol
+No configuration needed.
+```bash
+pipx install exegol
+exegol install light
+exegol start
+```
+
+## 🛠️ Included Tools (Host)
+While most tools should be run in containers, we include the essentials for network connectivity and hardware hacking on the host:
+- **Network:** Wireshark, Nmap, Aircrack-ng, Tcpdump
+- **Hardware:** PCIutils, USButils, Ethtool, Macchanger
+- **System:** Zsh, Tmux, Htop, Bat
+
+## 🏗️ Build It Yourself
+Blackfin is built using [BlueBuild](https://blue-build.org).
+Fork this repository and modify `recipe.yml` to create your own flavor.
+
+---
+*Built on the shoulders of giants: [Universal Blue](https://ublue.it), [Exegol](https://github.com/ThePorgs/Exegol), and [BlackArch Linux](https://blackarch.org).*
