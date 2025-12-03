@@ -1,0 +1,58 @@
+# Le nom de votre image
+name: blackfin
+description: The immutable cybersecurity workstation based on Bluefin.
+base-image: ghcr.io/ublue-os/bluefin-dx
+image-version: latest
+
+modules:
+  - type: files
+    files:
+      - source: system/
+        destination: /
+
+  - type: rpm-ostree
+    repos:
+      # RPM Fusion est souvent nécessaire pour certains drivers/codecs
+      - https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+      - https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+    install:
+      # --- Outils Réseau & Hardware de base ---
+      - nmap
+      - nmap-ncat
+      - wireshark-cli
+      - tcpdump
+      - aircrack-ng
+      - pciutils
+      - usbutils
+      - ethtool
+      - macchanger
+      - net-tools
+      
+      # --- Outils Systèmes ---
+      - pipx
+      - distrobox
+      - podman-docker
+      - bat
+      - htop
+      - tmux
+      - zsh
+      - fastfetch # Pour le style dans le terminal
+
+      # --- Interface & Ergonomie (Le feeling "Hacker") ---
+      - gnome-shell-extension-pop-shell # Le Tiling Window Manager pour Gnome
+      - gnome-tweaks
+
+  - type: default-flatpaks
+    notify: false
+    system:
+      install:
+        # --- GUI Security Tools ---
+        - org.zaproxy.ZAP
+        - org.ghidra_sre.Ghidra
+        - net.portswigger.BurpSuiteCommunity
+        - org.wireshark.Wireshark
+
+  - type: systemd
+    system:
+      enabled:
+        - podman.socket # CRUCIAL pour Exegol
