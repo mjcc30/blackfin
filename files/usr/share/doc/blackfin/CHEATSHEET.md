@@ -2,6 +2,12 @@
 
 Welcome to Blackfin. Here are the essential commands to control your arsenal.
 
+## 🧠 Sensei (AI Mentor)
+| Command | Description |
+| :--- | :--- |
+| `just ask "question"` | Ask your AI Mentor about hacking, tools, or Linux. |
+| `just cheat` | Show this cheatsheet. |
+
 ## 🥷 Stealth & Privacy (Blackfin Exclusive)
 | Command | Description |
 | :--- | :--- |
@@ -11,10 +17,11 @@ Welcome to Blackfin. Here are the essential commands to control your arsenal.
 | `just clean-traces` | Wipe Bash history, Sudo tokens, and temporary files. |
 | `just ssh-stealth user@ip` | Connect via SSH without logging to `known_hosts` or history. |
 
-## 📦 Package Management
+## 📦 Package & Resources
 | Command | Description |
 | :--- | :--- |
 | `just blackfin-update` | Update System (Atomic), Flatpaks, Exegol images, and BlackArch. |
+| `just install-seclists`| Download SecLists (Big Wordlists) to `~/Wordlists`. |
 | `rpm-ostree install <pkg>` | Install a persistent system package (Requires Reboot). |
 | `brew install <tool>` | Install a CLI tool via Homebrew (Recommended). |
 
