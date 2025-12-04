@@ -25,7 +25,7 @@ jobs:
           enrollment_password: "blackfin-user" # Mot de passe par défaut optionnel pour le secure boot
 
       - name: Upload ISO to Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: blackfin-iso
           path: |
