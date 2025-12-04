@@ -28,6 +28,7 @@ modules:
       
       # --- Outils Systèmes ---
       - pipx
+      - uv # Requis pour Sensei
       - distrobox
       - podman-compose # Requis pour SysReptor
       - bat
