@@ -20,7 +20,7 @@ jobs:
           # On pointe sur la version "latest" qui vient d'être construite
           image_tag: latest 
           variant: Silverblue
-          version: 41 # Version de Fedora (Stable/Fallback)
+          version: 43 # Bleeding Edge (Rawhide) enabled by v1.4.0
           iso_name: blackfin-latest.iso
           enrollment_password: "blackfin-user" # Mot de passe par défaut optionnel pour le secure boot
 
