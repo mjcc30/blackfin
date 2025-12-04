@@ -15,49 +15,35 @@ git clone https://github.com/mjcc30/sensei.git "$INSTALL_DIR"
 cd "$INSTALL_DIR"
 
 # 2. Checkout de la dernière version stable (Tag)
+# git rev-list renvoie les hash, git describe trouve le tag
 LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
 echo "📌 Checkout version: $LATEST_TAG"
 git checkout "$LATEST_TAG"
 
 # 3. Installer les dépendances avec UV (dans un venv isolé)
-# On suppose que 'uv' est déjà installé dans l'image (via recipe.yml)
 cd "$INSTALL_DIR"
 uv sync --frozen
 
-# 3. Créer le wrapper executable
-# Ce script lance Sensei en utilisant son propre environnement virtuel
+# 4. Créer le wrapper executable
+# Ce script sera exécuté par l'utilisateur final.
 cat <<EOF > "$BIN_DIR/sensei"
 #!/bin/bash
 
-# Check for user-updated version (Self-Update mechanism)
+# 1. Check for user-updated version (Self-Update mechanism)
 USER_BIN="\$HOME/.local/bin/sensei"
 if [ -f "\$USER_BIN" ]; then
     exec "\$USER_BIN" "\$@"
 fi
 
-# Fallback to System Version (Source + UV)
+# 2. System Version fallback
+# Load API Key from config if not exported
 export GEMINI_API_KEY="\${GEMINI_API_KEY:-\$(cat \$HOME/.config/blackfin/sensei_key 2>/dev/null)}"
+
+# Change directory to ensure python imports work
 cd "$INSTALL_DIR"
+
+# Execute Sensei as a module
 exec uv run -m app.main "\$@"
-EOF
-
-if [ -z "\$GEMINI_API_KEY" ]; then
-    echo "⚠️  Sensei needs an API Key."
-    echo "Get one at: https://aistudio.google.com/app/apikey"
-    read -p "Paste it here: " KEY
-    mkdir -p \$HOME/.config/blackfin
-    echo "\$KEY" > \$HOME/.config/blackfin/sensei_key
-    chmod 600 \$HOME/.config/blackfin/sensei_key
-    export GEMINI_API_KEY="\$KEY"
-fi
-
-cd $INSTALL_DIR
-# Lance main.py avec l'argument 'ask' si des arguments sont fournis, sinon 'chat'
-if [ \$# -eq 0 ]; then
-    uv run app/main.py chat
-else
-    uv run app/main.py ask "\$*"
-fi
 EOF
 
 chmod +x "$BIN_DIR/sensei"
