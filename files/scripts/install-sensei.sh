@@ -28,7 +28,18 @@ uv sync --frozen
 # Ce script lance Sensei en utilisant son propre environnement virtuel
 cat <<EOF > "$BIN_DIR/sensei"
 #!/bin/bash
+
+# Check for user-updated version (Self-Update mechanism)
+USER_BIN="\$HOME/.local/bin/sensei"
+if [ -f "\$USER_BIN" ]; then
+    exec "\$USER_BIN" "\$@"
+fi
+
+# Fallback to System Version (Source + UV)
 export GEMINI_API_KEY="\${GEMINI_API_KEY:-\$(cat \$HOME/.config/blackfin/sensei_key 2>/dev/null)}"
+cd "$INSTALL_DIR"
+exec uv run -m app.main "\$@"
+EOF
 
 if [ -z "\$GEMINI_API_KEY" ]; then
     echo "⚠️  Sensei needs an API Key."
