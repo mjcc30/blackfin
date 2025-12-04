@@ -55,7 +55,7 @@ modules:
       # - install-catppuccin.sh # Désactivé car l'URL du zip est instable
       - install-sensei.sh # Installation de l'IA Mentor
 
-  - type: default-flatpaks
+  - type: default-flatpaks@v1
     notify: false
     system:
       install:
