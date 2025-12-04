@@ -10,10 +10,16 @@ BIN_DIR="/usr/bin"
 
 echo "🥋 Installing Sensei..."
 
-# 1. Cloner le projet
+# 1. Cloner le projet (récupérer les tags)
 git clone https://github.com/mjcc30/sensei.git "$INSTALL_DIR"
+cd "$INSTALL_DIR"
 
-# 2. Installer les dépendances avec UV (dans un venv isolé)
+# 2. Checkout de la dernière version stable (Tag)
+LATEST_TAG=$(git describe --tags $(git rev-list --tags --max-count=1))
+echo "📌 Checkout version: $LATEST_TAG"
+git checkout "$LATEST_TAG"
+
+# 3. Installer les dépendances avec UV (dans un venv isolé)
 # On suppose que 'uv' est déjà installé dans l'image (via recipe.yml)
 cd "$INSTALL_DIR"
 uv sync --frozen
