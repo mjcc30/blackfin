@@ -13,14 +13,14 @@ jobs:
 
     steps:
       - name: Generate ISO
-        uses: jasonn3/build-container-installer@v1.2.4
+        uses: jasonn3/build-container-installer@v1.4.0
         with:
           image_name: blackfin
           image_repo: ghcr.io/mjcc30
           # On pointe sur la version "latest" qui vient d'être construite
           image_tag: latest 
           variant: Silverblue
-          version: 43 # Version de Fedora (doit matcher celle de Bluefin)
+          version: 41 # Version de Fedora (Stable/Fallback)
           iso_name: blackfin-latest.iso
           enrollment_password: "blackfin-user" # Mot de passe par défaut optionnel pour le secure boot
 
