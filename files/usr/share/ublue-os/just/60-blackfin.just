@@ -7,6 +7,9 @@ blackfin-help:
     @echo "  just ask <query>        - Ask Sensei (AI Mentor) a question"
     @echo "  just cheat              - Show the Blackfin Cheatsheet (Commands & Tips)"
     @echo "  just blackfin-update    - Update System, Exegol and BlackArch"
+    @echo "  just stealth-mode-on    - Randomize MAC, disable Logs & Bluetooth"
+    @echo "  just stealth-mode-off   - Restore normal networking"
+    @echo "  just install-seclists   - Download SecLists to ~/Wordlists"
 
 # Afficher la Cheatsheet
 cheat:
