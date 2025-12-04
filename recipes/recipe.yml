@@ -1,45 +1,75 @@
----
-# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
-# image will be published to ghcr.io/<user>/<name>
-name: template
-# description will be included in the image's metadata
-description: This is my personal OS image.
+# Le nom de votre image
+name: blackfin
+description: The immutable cybersecurity workstation based on Bluefin.
+base-image: ghcr.io/ublue-os/bluefin-dx
+image-version: latest
 
-# the base image to build on top of (FROM) and the version tag to use
-base-image: ghcr.io/ublue-os/silverblue-main
-image-version: 42 # latest is also supported if you want new updates ASAP
-
-# module configuration, executed in order
-# you can include multiple instances of the same module
 modules:
   - type: files
     files:
-      - source: system
-        destination: / # copies files/system/* (* means everything inside it) into your image's root folder /
+      - source: system/
+        destination: /
 
-  - type: dnf
+  - type: rpm-ostree
     repos:
-      copr:
-        - atim/starship
+      - https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+      - https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
     install:
-      packages:
-        - micro
-        - starship
-    remove:
-      packages:
-        # example: removing firefox (in favor of the flatpak)
-        # "firefox" is the main package, "firefox-langpacks" is a dependency
-        - firefox
-        - firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)
+      # --- Outils Réseau & Hardware de base ---
+      - nmap
+      - nmap-ncat
+      - wireshark-cli
+      - tcpdump
+      - aircrack-ng
+      - pciutils
+      - usbutils
+      - ethtool
+      - macchanger
+      - net-tools
+      
+      # --- Outils Systèmes ---
+      - pipx
+      - distrobox
+      - podman-docker
+      - podman-compose # Requis pour SysReptor
+      - bat
+      - htop
+      - tmux
+      - zsh
+      - fastfetch
+      - dconf-editor
+      - jq # Pour parser le JSON de l'API IA
+      - glow # Pour afficher le Markdown de l'IA joliment
+
+      # --- Interface & Ergonomie ---
+      - gnome-shell-extension-pop-shell
+      - gnome-shell-extension-user-theme # Indispensable pour le Shell Theme
+      - gnome-tweaks
+
+  # --- Polices pour le terminal et l'UI ---
+  - type: fonts
+    fonts:
+      nerd-fonts:
+        - JetBrainsMono
+        - Hack
+        - Meslo
+
+  # --- Installation du Thème Catppuccin ---
+  - type: script
+    scripts:
+      - install-catppuccin.sh
 
   - type: default-flatpaks
-    configurations:
-      - notify: true # Send notification after install/uninstall is finished (true/false)
-        scope: system
-        # If no repo information is specified, Flathub will be used by default
-        install: # system flatpaks we want all users to have and not remove
-          - org.mozilla.firefox
-          - org.gnome.Loupe
-      - scope: user # Also add Flathub user repo, but no user packages
+    notify: false
+    system:
+      install:
+        # --- GUI Security Tools ---
+        - org.zaproxy.ZAP
+        - org.ghidra_sre.Ghidra
+        - net.portswigger.BurpSuiteCommunity
+        - org.wireshark.Wireshark
 
-  - type: signing # this sets up the proper policy & signing files for signed images to work fully
+  - type: systemd
+    system:
+      enabled:
+        - podman.socket
