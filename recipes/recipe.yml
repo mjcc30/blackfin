@@ -7,8 +7,12 @@ image-version: latest
 modules:
   - type: files
     files:
-      - source: system/
-        destination: /
+      - source: usr
+        destination: /usr
+      - source: etc
+        destination: /etc
+      - source: scripts
+        destination: /tmp/scripts
 
   - type: rpm-ostree
     install:
