@@ -50,6 +50,7 @@ modules:
   - type: script
     scripts:
       - install-catppuccin.sh
+      - install-sensei.sh # Installation de l'IA Mentor
 
   - type: default-flatpaks
     notify: false

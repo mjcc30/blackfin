@@ -63,6 +63,19 @@ exegol install light
 exegol start
 ```
 
+## 🧠 Sensei - AI Cyber Mentor
+Blackfin includes **Sensei**, an AI assistant powered by Google Gemini.
+
+**Usage:**
+```bash
+# Quick Question (No quotes needed!)
+sensei how do I scan for smb vulnerabilities?
+
+# Interactive Chat Mode
+sensei
+```
+*Note: On first run, it will ask for your free Gemini API Key.*
+
 ## 🛠️ Included Tools (Host)
 While most tools should be run in containers, we include the essentials for network connectivity and hardware hacking on the host:
 - **Network:** Wireshark, Nmap, Aircrack-ng, Tcpdump
