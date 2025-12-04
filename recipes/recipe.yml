@@ -27,7 +27,6 @@ modules:
       # --- Outils Systèmes ---
       - pipx
       - distrobox
-      - podman-docker
       - podman-compose # Requis pour SysReptor
       - bat
       - htop
@@ -36,10 +35,6 @@ modules:
       - fastfetch
       - dconf-editor
       - jq # Pour parser le JSON de l'API IA
-      - glow # Pour afficher le Markdown de l'IA joliment
-
-      # --- Interface & Ergonomie ---
-      - gnome-shell-extension-pop-shell
       - gnome-shell-extension-user-theme # Indispensable pour le Shell Theme
       - gnome-tweaks
 
