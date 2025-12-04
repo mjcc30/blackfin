@@ -37,9 +37,9 @@ fi
 cd $INSTALL_DIR
 # Lance main.py avec l'argument 'ask' si des arguments sont fournis, sinon 'chat'
 if [ \$# -eq 0 ]; then
-    uv run main.py chat
+    uv run app/main.py chat
 else
-    uv run main.py ask "\$*"
+    uv run app/main.py ask "\$*"
 fi
 EOF
 
