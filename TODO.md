@@ -27,6 +27,7 @@ This file tracks the project's history and future direction.
 - [x] **Theme:** Catppuccin Mocha Dark Blue applied by default via dconf.
 - [x] **Fonts:** JetBrains Mono Nerd Fonts integrated.
 - [x] **Wallpaper:** Custom Cyber-Shark HD (1920x1080) wallpaper set as default.
+- [x] **Terminal:** Custom `fastfetch` configuration with Blackfin logo.
 - [x] **CLI Helpers:** Comprehensive `Justfile` with shortcuts (`just update`, `just cheat`).
 - [x] **Cheatsheet:** Local documentation available via `just cheat`.
 - [x] **Sensei:** AI Mentor CLI tool installed (`sensei` / `just ask`).
@@ -70,7 +71,17 @@ This file tracks the project's history and future direction.
 - [ ] **Feature: SDR Support**
     - *Description:* Add `gqrx` and `rtl-sdr` drivers to the base image for Radio Hacking capabilities.
 
-### 🧩 Epic 4: Development Efficiency (Custom Modules)
+### 🐳 Epic 4: Deep Exegol Integration
+> Making Exegol feel native, not just a container.
+
+- [ ] **Config: Auto-Mount Wordlists**
+    - Pre-configure `~/.exegol/config.yaml` to mount host's `~/Wordlists` to container's `/opt/resources`.
+- [ ] **Fix: Wayland/X11 Bridge**
+    - Create `just fix-gui` to handle `xhost` permissions for running GUI apps (Burp, Firefox) from containers on Wayland.
+- [ ] **Integration: Sensei x Exegol**
+    - Teach Sensei to construct `exegol exec` commands to run tools directly inside the container from the host CLI.
+
+### 🧩 Epic 5: Development Efficiency (Custom Modules)
 > Streamline the build process with custom BlueBuild modules.
 
 - [ ] **Module: Exegol Manager**
