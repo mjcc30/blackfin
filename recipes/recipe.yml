@@ -51,7 +51,7 @@ modules:
   # --- Installation du Thème Catppuccin ---
   - type: script
     scripts:
-      - install-catppuccin.sh
+      # - install-catppuccin.sh # Désactivé car l'URL du zip est instable
       - install-sensei.sh # Installation de l'IA Mentor
 
   - type: default-flatpaks
