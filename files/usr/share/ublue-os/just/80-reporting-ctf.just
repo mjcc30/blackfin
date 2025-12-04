@@ -6,7 +6,8 @@ ctf-help:
     @echo "  just install-sysreptor  - Deploy SysReptor (Pentest Reporting) via Podman"
     @echo "  just start-sysreptor    - Start SysReptor services"
     @echo "  just stop-sysreptor     - Stop SysReptor services"
-    @echo "  just htb-vpn <file>     - Connect to HackTheBox VPN (OpenVPN)"
+    @echo "  just htb-vpn <file>     - Connect to HackTheBox VPN"
+    @echo "  just thm-vpn <file>     - Connect to TryHackMe VPN"
 
 # Déploiement de SysReptor (Version Docker/Podman)
 install-sysreptor:
@@ -32,6 +33,15 @@ stop-sysreptor:
 # Helper HackTheBox VPN
 htb-vpn file:
     @echo "🔌 Connecting to HackTheBox VPN..."
+    @sudo openvpn --config {{file}} --daemon
+    @echo "✅ VPN started in background."
+    @echo "Waiting for IP..."
+    @sleep 5
+    @ip addr show tun0 | grep "inet " | awk '{print "   -> VPN IP: " $2}'
+
+# Helper TryHackMe VPN
+thm-vpn file:
+    @echo "🔌 Connecting to TryHackMe VPN..."
     @sudo openvpn --config {{file}} --daemon
     @echo "✅ VPN started in background."
     @echo "Waiting for IP..."
