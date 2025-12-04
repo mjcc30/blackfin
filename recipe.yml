@@ -31,6 +31,7 @@ modules:
       - pipx
       - distrobox
       - podman-docker
+      - podman-compose # Requis pour SysReptor
       - bat
       - htop
       - tmux
