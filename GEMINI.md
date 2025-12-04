@@ -1,54 +1,39 @@
 # Blackfin Project Context
 
 ## Project Overview
-**Blackfin** is a next-generation, immutable cybersecurity workstation distribution. It is built on the principles of **Cloud Native Linux**, leveraging **Fedora Silverblue** and **Bluefin** as its indestructible base. The core philosophy is "The Host is Sacred, The Tools are Disposable," meaning the host OS remains clean and stable while security tools run in isolated containers.
+**Blackfin** is a next-generation, immutable cybersecurity workstation distribution. It is built on the principles of **Cloud Native Linux**, leveraging **Fedora Silverblue** (via **Bluefin-dx**) as its indestructible base.
+**Philosophy:** "The Host is Sacred, The Tools are Disposable."
 
 ## Key Technologies & Architecture
 *   **Base OS:** [Bluefin-dx](https://projectbluefin.io/) (Fedora Silverblue).
 *   **Build System:** [BlueBuild](https://blue-build.org) (Generates OCI images via GitHub Actions).
 *   **Containerization:**
-    *   **Podman:** Primary container engine.
-    *   **Distrobox:** Used to integrate **BlackArch** and its 3000+ tools seamlessly.
-    *   **Exegol:** A wrapper for Docker/Podman to run fully featured hacking environments.
-*   **Custom Tooling:**
-    *   **Sensei:** An AI-powered CLI mentor script (`sensei`) using the Google Gemini API.
-    *   **Ghost Shell:** A stealthy shell environment with IP spoofing capabilities.
-    *   **Justfile:** A command runner for common tasks (`just update`, `just stealth-mode-on`).
+    *   **Podman:** Primary container engine (Socket enabled for Exegol).
+    *   **Distrobox:** Used to integrate **BlackArch** seamlessly.
+    *   **Exegol:** A wrapper for Docker/Podman (installed via pipx).
 
 ## Key Files & Structure
-*   `recipe.yml`: The declarative configuration file defining the OS image (packages, fonts, scripts). **This is the primary file for modification.**
-*   `files/`: Contains custom files overlayed onto the system image (e.g., scripts, configuration).
-    *   `files/usr/bin/sensei`: The AI Mentor script.
-    *   `files/usr/bin/ghost-shell`: The IP spoofing script.
+*   `recipe.yml`: The declarative configuration file. **Located in `recipes/`** (Crucial fix).
+*   `files/`: Custom files overlay.
+    *   `files/scripts/`: Install scripts (e.g., `install-sensei.sh`). **Must be referenced relatively** in `recipe.yml` (e.g., `install-sensei.sh`, NOT `/tmp/...`).
     *   `files/usr/share/ublue-os/just/*.just`: Custom `just` commands.
-*   `scripts/`: Custom install scripts (e.g., `install-catppuccin.sh`).
-*   `.github/workflows/`: CI/CD pipelines for building the image, generating ISOs, and cleanup.
-*   `TODO.md`: The project roadmap and status.
-*   `LICENSE`: GNU GPLv3.
+*   `.github/workflows/`:
+    *   `build.yml`: Builds the OCI image.
+    *   `generate-iso.yml`: Generates the bootable ISO (Requires Package to be Public).
 
-## Building and Installation
-**Building:**
-The project uses GitHub Actions for building. Pushing changes to the repository triggers the build pipeline defined in `.github/workflows/build.yml`.
+## Known Issues & Fixes (Lessons Learned)
+1.  **RPM Fusion Conflict:** Removed `rpmfusion` repos from `recipe.yml` because Fedora Rawhide (43) repos are unstable or missing.
+2.  **Docker vs Podman:** Removed `podman-docker` because `bluefin-dx` already includes `docker-ce`. Installing both causes a transaction error.
+3.  **Script Paths:** BlueBuild mounts `files/` to `/tmp/files/`. Scripts in `recipe.yml` must be referenced by filename only if they are in `files/scripts/`.
+4.  **Missing Packages:** `glow` and `pop-shell` were removed because they are not in standard Fedora repos.
 
-**Installation (Rebase Method):**
-To switch an existing Bluefin/Fedora Silverblue system to Blackfin:
-```bash
-rpm-ostree rebase ostree-unverified-registry:ghcr.io/mjcc30/blackfin:latest
-systemctl reboot
-```
+## Components & Tools
+*   **Sensei:** Installed via `install-sensei.sh` which fetches the latest **Binary Release** from GitHub.
+*   **Ghost Shell:** IP Spoofing script (THC) integrated as `just ghost-shell`.
+*   **SysReptor:** Reporting tool installed via `just install-sysreptor` (Podman Compose).
+*   **Theme:** Catppuccin Mocha (Configured via dconf, install script disabled for stability).
 
-**ISO Generation:**
-A bootable ISO can be generated via the "Generate ISO" GitHub Action workflow.
-
-## Development Conventions
-*   **Immutability:** Avoid modifying `/usr` directly on a running system. Make changes via `recipe.yml` or `rpm-ostree`.
-*   **Container-First:** Prefer installing tools in containers (Distrobox, Exegol) rather than layering them onto the host.
-*   **Justfile:** Use `just` for common administrative and operational tasks to abstract complexity.
-*   **Style:** The project uses the **Catppuccin Mocha** theme and **Nerd Fonts** for a consistent, hacker-centric aesthetic.
-
-## Current Status & Roadmap
-*   **Version:** v1.0 (Stable Base)
-*   **Pending Tasks:**
-    *   Smoke testing on bare metal.
-    *   Verifying USB passthrough for hardware hacking.
-    *   Browser hardening and Metasploit DB automation.
+## Roadmap
+*   **v1.0 (Megalodon):** Stable release.
+*   **v1.x:** USBIP automation, Browser hardening.
+*   **v2.0:** Deep integration with Sensei Swarm via MCP.
