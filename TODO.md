@@ -70,19 +70,13 @@ This file tracks the project's history and future direction.
 - [ ] **Feature: SDR Support**
     - *Description:* Add `gqrx` and `rtl-sdr` drivers to the base image for Radio Hacking capabilities.
 
----
+### 🧩 Epic 4: Development Efficiency (Custom Modules)
+> Streamline the build process with custom BlueBuild modules.
 
-## 🔬 R&D / Future Vision (v3.0 - The Swarm)
-> Implementation of Multi-Agent Systems (MAS) inspired by [Gemini Flow](https://github.com/clduab11/gemini-flow).
-
-- [ ] **Architecture: Agent Swarm**
-    - Transition Sensei from a Single Agent to an Orchestrator.
-    - Create specialized sub-agents: `ReconAgent`, `ExploitAgent`, `ReportAgent`.
-- [ ] **Protocol: MCP (Model Context Protocol)**
-    - Implement MCP to allow agents to share context (e.g., Scan results) seamlessly.
-- [ ] **Protocol: A2A (Agent-to-Agent)**
-    - Enable direct communication between Exegol containers and Sensei agents.
-- [ ] **Goal:** Fully autonomous CTF solving capabilities.
+- [ ] **Module: Exegol Manager**
+    - *Goal:* Create a custom module to handle Exegol image selection and auto-updates declaratively in `recipe.yml`.
+- [ ] **Module: Sensei Updater**
+    - *Goal:* Ensure Sensei pulls the latest version at build time (or boot time) via a dedicated module logic.
 
 ---
 
