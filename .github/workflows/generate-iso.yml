@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Generate ISO
-        uses: jasonn3/build-container-installer@v1.2.4
+        uses: jasonn3/build-container-installer@v1.4.0
         with:
           image_name: blackfin
           image_repo: ghcr.io/mjcc30
