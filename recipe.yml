@@ -38,6 +38,8 @@ modules:
       - zsh
       - fastfetch
       - dconf-editor
+      - jq # Pour parser le JSON de l'API IA
+      - glow # Pour afficher le Markdown de l'IA joliment
 
       # --- Interface & Ergonomie ---
       - gnome-shell-extension-pop-shell
