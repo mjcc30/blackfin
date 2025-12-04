@@ -11,8 +11,6 @@ modules:
         destination: /usr
       - source: etc
         destination: /etc
-      - source: scripts
-        destination: /tmp/scripts
 
   - type: rpm-ostree
     install:
@@ -53,8 +51,8 @@ modules:
   # --- Installation du Thème Catppuccin ---
   - type: script
     scripts:
-      - install-catppuccin.sh
-      - install-sensei.sh # Installation de l'IA Mentor
+      - /tmp/files/scripts/install-catppuccin.sh
+      - /tmp/files/scripts/install-sensei.sh # Installation de l'IA Mentor
 
   - type: default-flatpaks
     notify: false
