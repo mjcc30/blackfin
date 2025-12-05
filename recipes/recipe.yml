@@ -28,7 +28,7 @@ modules:
       
       # --- Outils Systèmes ---
       - pipx
-      - uv # Requis pour Sensei
+      - uv # Requis pour dev tools
       - distrobox
       - podman-compose # Requis pour SysReptor
       - bat
@@ -37,9 +37,12 @@ modules:
       - zsh
       - fastfetch
       - dconf-editor
-      - jq # Pour parser le JSON de l'API IA
-      - gnome-shell-extension-user-theme # Indispensable pour le Shell Theme
+      - jq
+      - gnome-shell-extension-user-theme
       - gnome-tweaks
+      # Sensei Core Runtime
+      - sqlite
+      - sqlite-libs
 
   # --- Polices pour le terminal et l'UI ---
   - type: fonts
@@ -53,7 +56,7 @@ modules:
   - type: script
     scripts:
       # - install-catppuccin.sh # Désactivé car l'URL du zip est instable
-      - install-sensei.sh # Installation de l'IA Mentor
+      - install-sensei-v3.sh # Installation de Sensei Core V3 (Rust)
 
   - type: default-flatpaks@v1
     notify: false
