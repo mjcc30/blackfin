@@ -58,9 +58,17 @@ if [ -f "\$HOME/.local/bin/sensei" ]; then
     exec "\$HOME/.local/bin/sensei" "\$@"
 fi
 
-# 2. System Client
-# No need to load env vars here, the client talks to server on localhost:3000
-exec $INSTALL_DIR/sensei-client "\$@"
+# 2. System Client with Auto-Ask
+# If the first argument is not a known subcommand, assume it's a query for 'ask'.
+case "\$1" in
+    ask|add|help|--help|-h|--version|-V|"")
+        exec $INSTALL_DIR/sensei-client "\$@"
+        ;;
+    *)
+        # Default to 'ask' command if no subcommand provided
+        exec $INSTALL_DIR/sensei-client ask "\$@"
+        ;;
+esac
 EOF
 
 chmod +x "$BIN_DIR/sensei"
